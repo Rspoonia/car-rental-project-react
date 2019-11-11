@@ -1,0 +1,46 @@
+import React, { Component } from 'react';
+import $ from "jquery";
+
+class SearchBar extends Component {
+
+    constructor() {
+        super();
+        this.state = { isClick: false, latlng: null };
+    }
+
+    initAutocomplete() {
+        var input = document.getElementById('map-input');
+        new window.google.maps.places.SearchBox(input);
+    }
+
+    getLatitudeLongitude = (address, callback) => {
+        let geocoder = new window.google.maps.Geocoder();
+        if (geocoder) {
+            geocoder.geocode({ 'address': address }, function (results, status) {
+                if (status === window.google.maps.GeocoderStatus.OK) {
+                    const latitude = results[0].geometry.location.lat();
+                    const longitude = results[0].geometry.location.lng();
+                    callback({ lat: latitude, long: longitude });
+                }
+            });
+        }
+    }
+
+    findLocationFromMap = () => {
+        this.getLatitudeLongitude($('#map-input').val(), (latlng) => {
+            console.log('findLocationFromMap', latlng);
+        })
+    }
+
+    render() {
+        return (
+            <div className="studio-finder">
+                    <input id="map-input" className="controls input-box" type="text" placeholder="Search by location" onKeyPress={this.initAutocomplete} />
+                    <button className="btn btn-find-studio" onClick={this.findLocationFromMap}>FIND Location</button>
+            </div>
+        );
+    }
+}
+
+
+export default SearchBar;

@@ -1,0 +1,100 @@
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import "../../styles/Studio1.css"
+import scriptLoader from 'react-async-script-loader'
+import { MAP } from "../../resources/map"
+import $ from "jquery";
+// import StudioList from "../listings/StudioList"
+// import Messanger from "./Messanger"
+class Studio extends Component {
+    constructor() {
+        super();
+        this.state = { isClick: false, latlng: { lat: 12.902429, long: 77.600521 } };
+
+    }
+    initAutocomplete() {
+        var input = document.getElementById('map-input');
+        new window.google.maps.places.SearchBox(input);
+    }
+    getLocation = () => {
+        this.setState({ isClick: true })
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(this.showPosition);
+        } else {
+            alert("Geolocation is not supported by this browser.");
+        }
+    }
+    showPosition = (position) => {
+        var geocoder = new window.google.maps.Geocoder;
+        var latlng = { lat: position.coords.latitude, lng: position.coords.longitude };
+        this.state.latlng = latlng;
+        sessionStorage.setItem("location", JSON.stringify(latlng));
+        geocoder.geocode({ 'location': latlng }, function (results, status) {
+            if (status == window.google.maps.GeocoderStatus.OK) {
+                document.getElementById('map-input').value = results[0].formatted_address
+            }
+        })
+    }
+    getLatitudeLongitude = (address, callback) => {
+        let geocoder = new window.google.maps.Geocoder();
+        if (geocoder) {
+            geocoder.geocode({ 'address': address }, function (results, status) {
+                if (status == window.google.maps.GeocoderStatus.OK) {
+                    const latitude = results[0].geometry.location.lat();
+                    const longitude = results[0].geometry.location.lng();
+                    let location = { lat: latitude, long: longitude }
+                    sessionStorage.setItem("location", JSON.stringify(location));
+                    callback({ lat: latitude, long: longitude });
+                }
+            });
+        }
+    }
+    findStudio = () => {
+    	sessionStorage.setItem("location", JSON.stringify(this.state.latlng));
+        if (!this.state.isClick && $('#map-input').val()) {
+            this.getLatitudeLongitude($('#map-input').val(), (latlng) => {
+                this.props.history.push({
+                    pathname: "/studios",
+                    latlng: latlng
+                });
+            })
+            this.props.history.push({
+                    pathname: "/studios"
+                });
+        }
+        else if ($('#map-input').val()) {
+            this.props.history.push({
+                pathname: "/studios",
+                latlng: this.state.latlng
+            });
+        } else {
+           alert("Enter location");
+        }
+    }
+
+    render() {
+        return (
+            <div className="studio-finder">
+                <p className="title">What do you want to do?</p>
+                <div className="search-box-container">
+                    <input id="map-input" className="controls input-box" type="text" placeholder="Search by location" onKeyPress={this.initAutocomplete} />
+                    
+                    <img src="https://cdn2.iconfinder.com/data/icons/freecns-cumulus/16/519540-077_Location-512.png" alt="wait..." id="input_img" onClick={this.getLocation} />
+                </div>
+                <div className="button-cls">
+                    <button className="btn btn-find-jam" >FIND JAMROOMS</button>
+                    <button className="btn btn-find-studio" onClick={this.findStudio}>FIND STUDIOS</button>
+                </div>
+                <button disabled className="btn btn-find-people">FIND PEOPLE TO JAM WITH</button>
+            </div>
+        );
+    }
+}
+
+const mapStateToProps = state => {
+    return {
+        users: state.users
+    }
+}
+
+export default scriptLoader(MAP)(connect(mapStateToProps)(Studio))

@@ -1,0 +1,43 @@
+.App {
+    background-image: url('./Assets/photo-41151-1.jpg');
+    height: 700px;
+    width: -webkit-fill-available;
+}
+
+.support24x7-time {
+    text-align: right;
+    margin-top: -30px;
+    margin-right: 50px;
+    font-weight: bold;
+    font-size: 26px;
+}
+
+.support24x7-number {
+    text-align: right;
+    margin-top: -10px;
+    margin-right: 50px;
+    font-weight: bold;
+    font-size: 26px;
+}
+
+.support24x7-number:hover {
+    background-color: blue;
+}
+
+.support24x7-time:hover {
+    background-color: red;
+}
+
+.head-src {
+    text-align: left;
+    width: 150px;
+    display: inline-flex;
+    height: 30px;
+}
+
+.head-tag {
+    text-align: center;
+    margin-top: 100px;
+    color: aliceblue;
+    margin-bottom: 50px;
+}

@@ -1,0 +1,60 @@
+.disp-flex {
+    display: flex;
+}
+
+.date-place-container {
+    margin-left: 20%;
+}
+
+.app-container {
+    border: 1px solid black;
+    height: 15rem;
+    padding: 30px 10px;
+    background-color: #505050;
+    /* opacity: 0.5; */
+}
+
+.button-style {
+    width: 140px;
+    background-color: blue;
+    text-align: center;
+}
+
+.button-style1 {
+    color: black;
+}
+
+.active-button {
+    background-color: cadetblue;
+}
+
+.select-button {
+    text-align: center;
+}
+
+.select-button>button {
+    height: 45px;
+    width: 200px;
+}
+
+.airport-link {
+    color: #000;
+    font-size: 13px;
+    font-weight: 600;
+    background-color: #fff;
+    padding: 6px 10px;
+    border-radius: 4px;
+    margin-right: 20px;
+}
+
+.airport-link:hover {
+    color: #007fed;
+    font-weight: 600;
+}
+
+.airport-link-outer-box {
+    margin: 0 auto;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    text-align: center;
+}

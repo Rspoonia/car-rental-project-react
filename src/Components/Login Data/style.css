@@ -1,0 +1,26 @@
+.login-design {
+    text-align: center;
+    background-color: lightgrey;
+}
+
+.input-field {
+    height: 40px;
+    width: 300px;
+    margin-top: 50px;
+    padding: 0 10px 0 20px;
+}
+
+.submit-data {
+    border-radius: 12px;
+    width: 100px;
+    height: 40px;
+    background-color: #4CAF50;
+    margin-bottom: 30px;
+    margin-top: 30px;
+}
+
+.login-components {
+    width: 500px;
+    background-color: antiquewhite;
+    margin: 0 auto;
+}
